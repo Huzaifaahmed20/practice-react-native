@@ -6,9 +6,9 @@ import {
 import Login from './Screens/Login'
 import Signup from './Screens/Signup'
 import Welcome from './Screens/WelcomeScreen'
-import Home from './Screens/Home'
+import Home from './Screens/Home/HomeScreen'
 import AuthLoading from './Screens/AuthLoading'
-
+import MyList from './Screens/MyList/MyListScreen'
 const Auth = createStackNavigator(
   {
     WelcomeScreen: {
@@ -33,6 +33,9 @@ const HomeStack = createStackNavigator(
   {
     HomeScreen: {
       screen: Home
+    },
+    MyListScreen: {
+      screen: MyList
     }
   },
   {
@@ -42,7 +45,7 @@ const HomeStack = createStackNavigator(
     }
   }
 )
-export const rootNavigator = (signedIn) => {
+export const rootNavigator = signedIn => {
   return createAppContainer(
     createSwitchNavigator(
       {
