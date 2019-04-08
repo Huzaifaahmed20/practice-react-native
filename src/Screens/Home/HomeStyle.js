@@ -71,5 +71,18 @@ export const HomeStyle = StyleSheet.create({
     textAlign: 'center',
     color: '#000000',
     fontSize: 20
+  },
+  logOutButton: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    backgroundColor: '#202D45',
+    width: '60%',
+    marginVertical: 40,
+    paddingVertical: 10
+  },
+  logOutButtonText: {
+    color: '#fff',
+    fontWeight: '500'
   }
 })

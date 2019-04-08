@@ -1,25 +1,29 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {
   Text,
   View,
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  AsyncStorage,
   Image
 } from 'react-native'
 import { loginUser } from '../Action'
 import { connect } from 'react-redux'
-// import Icon from "react-native-vector-icons/FontAwesome";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import ValidationComponent from 'react-native-form-validator'
+import { Error } from '../Components/Error'
 
-class Login extends Component {
+class Login extends ValidationComponent {
   state = {
     email: '',
     password: ''
   }
 
   handleSubmit = async () => {
+    this.validate({
+      email: { email: true, required: true },
+      password: { required: true }
+    })
     const { navigation } = this.props
     const { navigate } = navigation
     await this.props.loginUser(this.state)
@@ -55,6 +59,9 @@ class Login extends Component {
             placeholderTextColor={'#000000'}
             onChangeText={password => this.setState({ password })}
           />
+
+          <Error message={this.getErrorMessages() || this.props.message} />
+
           <TouchableOpacity
             style={styles.buttonContainer}
             onPress={this.handleSubmit}>
@@ -112,7 +119,13 @@ const styles = StyleSheet.create({
   }
 })
 
+const mapStateToProps = ({ user }) => {
+  return {
+    message: user.message
+  }
+}
+
 export default connect(
-  null,
+  mapStateToProps,
   { loginUser }
 )(Login)

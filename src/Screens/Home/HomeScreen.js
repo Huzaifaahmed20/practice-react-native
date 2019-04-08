@@ -9,17 +9,31 @@ import {
 } from 'react-native'
 import { HomeStyle } from './HomeStyle'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import MainHeader from '../../Components/MainHeader'
+// import MainHeader from '../../Components/MainHeader'
 
 export default class Home extends Component {
+  static navigationOptions = {
+    title: 'Dashboard',
+    headerStyle: {
+      backgroundColor: '#152534'
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold'
+    }
+  }
   goToMyList = () => {
     this.props.navigation.navigate('MyListScreen')
+  }
+  logOut = async () => {
+    await AsyncStorage.removeItem('token')
+    this.props.navigation.navigate('LoginScreen')
   }
   render() {
     return (
       <View style={{ flex: 1 }}>
         <StatusBar hidden={true} />
-        <MainHeader title='Dashboard' />
+        {/* <MainHeader title='Dashboard' /> */}
         <View style={HomeStyle.halfMainStyle}>
           <View style={HomeStyle.subProfileStyle}>
             <TouchableOpacity
@@ -80,6 +94,9 @@ export default class Home extends Component {
             <Text style={HomeStyle.iconTextSetting}>Rating</Text>
           </View>
         </View>
+        <TouchableOpacity onPress={this.logOut} style={HomeStyle.logOutButton}>
+          <Text style={HomeStyle.logOutButtonText}>LOG OUT</Text>
+        </TouchableOpacity>
       </View>
     )
   }

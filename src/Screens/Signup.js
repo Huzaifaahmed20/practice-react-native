@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {
   Text,
   View,
@@ -10,9 +10,10 @@ import {
 import { connect } from 'react-redux'
 import { signUpUser } from '../Action'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-// import Icon from "react-native-vector-icons/FontAwesome";
+import ValidationComponent from 'react-native-form-validator'
+import { Error } from '../Components/Error'
 
-class Signup extends Component {
+class Signup extends ValidationComponent {
   state = {
     name: '',
     email: '',
@@ -20,10 +21,14 @@ class Signup extends Component {
   }
 
   handleSubmit = async () => {
-    const { signUpUser, navigation } = this.props
+    this.validate({
+      email: { email: true, required: true },
+      password: { required: true }
+    })
+    const { navigation } = this.props
     const { navigate } = navigation
-    await signUpUser(this.state)
-    await navigate('DasboardScreen')
+    await this.props.signUpUser(this.state)
+    await navigate('HomeScreen')
   }
 
   goToLogin = () => {
@@ -62,6 +67,9 @@ class Signup extends Component {
             onChangeText={password => this.setState({ password })}
             secureTextEntry
           />
+
+          <Error message={this.getErrorMessages()} />
+
           <TouchableOpacity
             style={styles.buttonContainer}
             onPress={this.handleSubmit}>

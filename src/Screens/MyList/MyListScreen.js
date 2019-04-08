@@ -1,67 +1,50 @@
 import React, { Component } from 'react'
-import { Text, View, FlatList, TouchableOpacity, Image } from 'react-native'
+import { Text, View, FlatList, ActivityIndicator } from 'react-native'
 import { getPosts } from '../../Action'
 import { connect } from 'react-redux'
-import { MyListStyle } from './MyListStyle'
-import Icon from 'react-native-vector-icons/FontAwesome'
-import MainHeader from '../../Components/MainHeader'
+import ListItem from './ListItem'
+import { IconButton } from '../../Components/IconButton'
 
-class MyListItem extends React.PureComponent {
-  _onPress = () => {
-    // this.props.onPressItem(this.props.id)
-  }
-
-  render() {
-    // const textColor = this.props.selected ? 'red' : 'black'
-    return (
-      <View style={MyListStyle.subProfileStyle}>
-        <TouchableOpacity
-          // onPress={this.showPicker}
-          style={MyListStyle.profileView}>
-          <Icon
-            style={MyListStyle.iconStyle}
-            name='home'
-            size={25}
-            color='#fff'
-          />
-          {/* <Image
-              style={MyListStyle.pic}
-              source={require('../../Assets/logo.png')}
-            /> */}
-        </TouchableOpacity>
-        <View style={MyListStyle.listItems}>
-          <Text
-            style={MyListStyle.titleStyle}
-            numberOfLines={1}
-            ellipsizeMode={'tail'}>
-            {this.props.title}
-          </Text>
-          <Text numberOfLines={1} ellipsizeMode={'tail'}>
-            {this.props.body}
-          </Text>
-        </View>
-      </View>
-    )
-  }
-}
 class MyList extends Component {
+  // static navigationOptions = {
+  //   title: 'Orders',
+  //   headerLeft: (
+  //    
+  //   ),
+  //   headerStyle: {
+  //     backgroundColor: '#152534'
+  //   },
+  //   headerTintColor: '#fff',
+  //   headerTitleStyle: {
+  //     fontWeight: 'bold'
+  //   }
+  // }
   async componentDidMount() {
+    console.log(this.props)
     await this.props.getPosts()
   }
-  _keyExtractor = (item, index) => item.id
+
+  _keyExtractor = item => item.id
+
   _renderItem = ({ item }) => (
-    <MyListItem id={item.id} body={item.body} title={item.title} />
+    <ListItem id={item.id} body={item.body} title={item.title} />
   )
+
   render() {
     return (
-      <View>
-        <MainHeader title='Orders' />
-        <FlatList
-          data={this.props.posts}
-          extraData={this.state}
-          keyExtractor={this._keyExtractor}
-          renderItem={this._renderItem}
-        />
+      <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          {this.props.posts.length ? (
+            <FlatList
+              data={this.props.posts}
+              extraData={this.state}
+              keyExtractor={this._keyExtractor}
+              renderItem={this._renderItem}
+            />
+          ) : (
+            <ActivityIndicator size='large' color='#202D45' />
+          )}
+        </View>
       </View>
     )
   }

@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native'
 
-
 export default class Welcome extends Component {
   goToLogin = () => {
     this.props.navigation.navigate('LoginScreen')
   }
+  goToSignup = () => {
+    this.props.navigation.navigate('SignUpScreen')
+  }
   render() {
-    console.log(this.props)
     return (
       <View style={styles.main}>
         <Image
@@ -19,7 +20,7 @@ export default class Welcome extends Component {
           <TouchableOpacity onPress={this.goToLogin} style={styles.buttons}>
             <Text style={{ color: '#fff', textAlign: 'center' }}>LOG IN</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.buttons}>
+          <TouchableOpacity onPress={this.goToSignup} style={styles.buttons}>
             <Text style={{ color: '#fff', textAlign: 'center' }}>SIGN UP</Text>
           </TouchableOpacity>
         </View>
