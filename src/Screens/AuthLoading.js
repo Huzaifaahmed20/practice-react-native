@@ -1,12 +1,16 @@
 import React, { Component } from 'react'
-import { Text, View, ActivityIndicator } from 'react-native'
+import { View, ActivityIndicator,AsyncStorage } from 'react-native'
 
 export default class AuthLoading extends Component {
+  componentDidMount() {
+    AsyncStorage.getItem('token').then(res => {
+      this.props.navigation.navigate(res ? 'HomeStack' : 'Auth')
+    })
+  }
   render() {
     return (
-      <View>
+      <View style={{ flex: 1, justifyContent: 'center' }}>
         <ActivityIndicator />
-        <Text> textInComponent </Text>
       </View>
     )
   }

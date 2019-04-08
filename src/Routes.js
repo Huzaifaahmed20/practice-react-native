@@ -69,18 +69,16 @@ const HomeStack = createStackNavigator(
     }
   }
 )
-export const rootNavigator = signedIn => {
-  return createAppContainer(
-    createSwitchNavigator(
-      {
-        HomeStack,
-        Auth,
-        AuthLoading
-      },
-      {
-        initialRouteName: signedIn ? 'HomeStack' : 'Auth'
-      }
-    )
-  )
-}
-// export const createRootNav = createAppContainer(rootNavigator)
+
+const root = createSwitchNavigator(
+  {
+    HomeStack,
+    Auth,
+    AuthLoading
+  },
+  {
+    initialRouteName: 'AuthLoading'
+  }
+)
+
+export default createAppContainer(root)

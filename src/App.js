@@ -16,11 +16,7 @@ import {
 } from 'react-native'
 import { Provider } from 'react-redux'
 import { store } from './Store'
-import Welcome from './Screens/WelcomeScreen'
-import Auth from './Routes'
-import HomeStack from './Routes'
-import { NavigationActions } from 'react-navigation'
-import { rootNavigator } from './Routes'
+import  RootNavigator  from './Routes'
 
 // import Home from './Routes'
 
@@ -28,17 +24,17 @@ export default class App extends Component {
   state = {
     res: ''
   }
-  componentDidMount() {
-    AsyncStorage.getItem('token').then(res => {
-      this.setState({ res })
-    })
-  }
+  // componentDidMount() {
+  //   AsyncStorage.getItem('token').then(res => {
+  //     this.setState({ res })
+  //   })
+  // }
   render() {
-    const Layout = rootNavigator(this.state.res !== null ? true : false)
+    // const Layout = rootNavigator(this.state.res !== null ? true : false)
     return (
       <Provider store={store}>
         <View style={styles.container}>
-          <Layout />
+          <RootNavigator />
         </View>
       </Provider>
     )
